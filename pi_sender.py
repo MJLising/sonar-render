@@ -16,7 +16,8 @@ GPIO.setup(ECHO, GPIO.IN)
 SOUND_SPEED = 343.0  # air; change to 1482 if underwater
 
 # set this after deploy: wss://<yourservice>.onrender.com/ws/publisher
-WS_SERVER = os.environ.get("WS_SERVER", "https://sonar-render-4.onrender.com")
+WS_SERVER = os.environ.get("WS_SERVER", "wss://sonar-render-4.onrender.com/ws/publisher")
+
 
 def read_distance():
     GPIO.output(TRIG, False)
@@ -44,7 +45,7 @@ def read_distance():
     return distance_m
 
 async def send_loop():
-    async with websockets.connect(WS_SERVER) as ws:
+    async with websockets.connect(WS_SERVER, open_timeout=20, ping_interval=20) as ws:
         print("Connected to server")
         try:
             while True:
