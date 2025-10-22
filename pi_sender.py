@@ -16,7 +16,7 @@ GPIO.setup(ECHO, GPIO.IN)
 SOUND_SPEED = 343.0  # air; change to 1482 if underwater
 
 # set this after deploy: wss://<yourservice>.onrender.com/ws/publisher
-WS_SERVER = os.environ.get("WS_SERVER", "wss://yourservice.onrender.com/ws/publisher")
+WS_SERVER = os.environ.get("WS_SERVER", "https://sonar-render-4.onrender.com")
 
 def read_distance():
     GPIO.output(TRIG, False)
