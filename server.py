@@ -2,6 +2,7 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
+from fastapi import Request, HTTPException
 import uvicorn
 import os   
 import asyncio
@@ -40,6 +41,26 @@ class ConnectionManager:
                     await self.disconnect(v)
 
 manager = ConnectionManager()
+
+@app.post("/publish")
+async def publish(request: Request):
+    """
+    Accept JSON from HTTP POST and broadcast to all connected viewers.
+    Return {"status":"ok"} on success.
+    """
+    try:
+        payload = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="invalid_json")
+
+    # OPTIONAL: very basic validation (distance_m present or null)
+    if not isinstance(payload, dict):
+        raise HTTPException(status_code=400, detail="invalid_payload")
+
+    # Broadcast to viewers (existing manager.broadcast_to_viewers)
+    # ensure payload is JSON string
+    await manager.broadcast_to_viewers(json.dumps(payload))
+    return {"status": "ok"}
 
 @app.get("/")
 async def index():
