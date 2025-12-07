@@ -41,7 +41,7 @@ ECHO = int(os.environ.get("ECHO_GPIO", "6"))
 SOUND_SPEED = float(os.environ.get("SOUND_SPEED", "343.0"))
 HTTP_TIMEOUT = float(os.environ.get("HTTP_TIMEOUT", "5.0"))
 MAX_CONSECUTIVE_FAILURES = int(os.environ.get("MAX_CONSECUTIVE_FAILURES", "10"))
-RANDOM_DETECTION_PROB = 0.35  # chance of extra random detection each loop
+RANDOM_DETECTION_PROB = 0.35 
 
 # Logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
